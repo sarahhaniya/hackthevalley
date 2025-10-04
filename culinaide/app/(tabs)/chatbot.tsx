@@ -1,12 +1,39 @@
-import { ThemedView } from "@/components/themed-view";
-import { ThemedText } from "@/components/themed-text";
+import React from "react";
+import { StyleSheet, View } from "react-native";
+import {
+	SafeAreaView,
+	useSafeAreaInsets,
+} from "react-native-safe-area-context";
+import { WebView } from "react-native-webview";
 
-export default function ChatbotScreen() {
+const Chatbot: React.FC = () => {
+	const insets = useSafeAreaInsets();
+
 	return (
-		<ThemedView style={{ justifyContent: "center", alignItems: "center" }}>
-			<ThemedText type="title">Culinaide Chatbot 🤖</ThemedText>
-			<ThemedText>Ask me for recipes, nutrition info, or tips!</ThemedText>
-			<ThemedText type="link">Start chatting →</ThemedText>
-		</ThemedView>
+		<SafeAreaView style={styles.container} edges={["top", "left", "right"]}>
+			<View style={styles.webviewContainer}>
+				<WebView
+					originWhitelist={["*"]}
+					source={require("../../assets/index.html")}
+					javaScriptEnabled
+					style={styles.webview}
+				/>
+			</View>
+		</SafeAreaView>
 	);
-}
+};
+
+const styles = StyleSheet.create({
+	container: {
+		flex: 1,
+		backgroundColor: "#fff",
+	},
+	webviewContainer: {
+		flex: 1,
+	},
+	webview: {
+		flex: 1,
+	},
+});
+
+export default Chatbot;

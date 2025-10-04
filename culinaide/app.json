@@ -1,6 +1,5 @@
 {
   "expo": {
-    
     "name": "culinaide",
     "slug": "culinaide",
     "version": "1.0.0",
@@ -10,7 +9,8 @@
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.anonymous.culinaide"
     },
     "android": {
       "adaptiveIcon": {

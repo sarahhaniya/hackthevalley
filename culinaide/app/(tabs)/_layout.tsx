@@ -1,11 +1,11 @@
 import { Tabs } from "expo-router";
 import { MaterialIcons } from "@expo/vector-icons";
-
+import AntDesign from "@expo/vector-icons/AntDesign";
 export default function TabLayout() {
-	return (
+  return (
 		<Tabs
 			screenOptions={{
-				headerShown: false,
+				headerShown: false, // ✅ tabs themselves don’t show headers
 				tabBarActiveTintColor: "#d1383c",
 				tabBarInactiveTintColor: "#999999",
 			}}
@@ -19,12 +19,21 @@ export default function TabLayout() {
 					),
 				}}
 			/>
+			{/* <Tabs.Screen
+				name="ingredientChecker"
+				options={{
+					title: "Ingredients",
+					tabBarIcon: ({ color, size }) => (
+						<AntDesign name="barcode" size={24} color="black" />
+					),
+				}}
+			/> */}
 			<Tabs.Screen
 				name="account"
 				options={{
-					title: "Profile",
+					title: "Account",
 					tabBarIcon: ({ color, size }) => (
-						<MaterialIcons name="person" size={size} color={color} />
+						<MaterialIcons name="person" size={size} color={"#999999"} />
 					),
 				}}
 			/>
@@ -51,5 +60,5 @@ export default function TabLayout() {
 				}}
 			/>
 		</Tabs>
-	);
+  );
 }
