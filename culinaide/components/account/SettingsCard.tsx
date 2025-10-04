@@ -1,10 +1,10 @@
 // components/account/SettingsCard.tsx
 import { useState, useEffect } from "react";
-import { StyleSheet, TextInput, Pressable, Switch, View } from "react-native";
+import { TextInput, Pressable, Switch, View } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { ThemedView } from "@/components/themed-view";
 import { ThemedText } from "@/components/themed-text";
-import { settingsStyles as styles} from "@/styles/settings.styles";
+import { settingsStyles as styles } from "@/styles/settings.styles";
 
 type Allergy = {
 	id: string;
@@ -51,7 +51,7 @@ export default function SettingsCard() {
 		);
 	};
 
-	// save preferences
+	// Save preferences to AsyncStorage
 	const handleSave = async () => {
 		try {
 			const selectedAllergies = allergies
@@ -71,19 +71,21 @@ export default function SettingsCard() {
 				"userPreferences",
 				JSON.stringify(preferences)
 			);
+
 			console.log("Preferences saved:", preferences);
 		} catch (err) {
 			console.error("Failed to save preferences:", err);
 		}
 	};
 
-	// load preferences
+	// Load preferences when screen mounts
 	useEffect(() => {
 		const loadPreferences = async () => {
 			try {
 				const saved = await AsyncStorage.getItem("userPreferences");
 				if (saved) {
 					const parsed = JSON.parse(saved);
+
 					setFamilySize(parsed.familySize || "4");
 
 					setAllergies((prev) =>
@@ -110,7 +112,6 @@ export default function SettingsCard() {
 
 	return (
 		<ThemedView style={styles.container}>
-
 			{/* Family Size */}
 			<ThemedView style={styles.section}>
 				<ThemedText style={styles.sectionTitle}>Family Size</ThemedText>
