@@ -8,6 +8,8 @@ import { ThemedView } from "@/components/themed-view";
 import { ThemedText } from "@/components/themed-text";
 import { MaterialIcons } from "@expo/vector-icons";
 import { accountEditStyles as styles } from "../../styles/account-edit.styles";
+import { Stack } from "expo-router";
+
 
 export default function AccountEditScreen() {
 	const [name, setName] = useState("");
@@ -88,81 +90,100 @@ export default function AccountEditScreen() {
 	}, []);
 
 	return (
-		<ScrollView style={styles.container}>
-			<ThemedText style={styles.title}>Edit Profile</ThemedText>
+		<>
+			<Stack.Screen
+				options={{
+					title: "Edit Profile", // 👈 change header text
+					headerBackTitle: "Back", // 👈 text under the arrow (iOS only)
+				}}
+			/>
 
-			{error ? <ThemedText style={styles.error}>{error}</ThemedText> : null}
+			<ScrollView style={styles.container}>
+				<ThemedText style={styles.title}>Edit Profile</ThemedText>
 
-			<Pressable style={styles.avatarContainer}>
-				<ThemedView style={styles.avatar}>
-					<MaterialIcons name="person" size={80} color="#a2bcf7" />
+				{error ? (
+					<ThemedText style={styles.error}>{error}</ThemedText>
+				) : null}
+
+				<Pressable style={styles.avatarContainer}>
+					<ThemedView style={styles.avatar}>
+						<MaterialIcons name="person" size={80} color="#a2bcf7" />
+					</ThemedView>
+					<ThemedText style={styles.changePhotoText}>
+						Change Photo
+					</ThemedText>
+				</Pressable>
+
+				{/* Name */}
+				<ThemedView style={styles.section}>
+					<ThemedText style={styles.label}>Name</ThemedText>
+					<TextInput
+						style={styles.input}
+						value={name}
+						onChangeText={setName}
+						placeholder="Your name"
+					/>
 				</ThemedView>
-				<ThemedText style={styles.changePhotoText}>Change Photo</ThemedText>
-			</Pressable>
 
-			{/* Name */}
-			<ThemedView style={styles.section}>
-				<ThemedText style={styles.label}>Name</ThemedText>
-				<TextInput
-					style={styles.input}
-					value={name}
-					onChangeText={setName}
-					placeholder="Your name"
-				/>
-			</ThemedView>
+				{/* Email */}
+				<ThemedView style={styles.section}>
+					<ThemedText style={styles.label}>Email</ThemedText>
+					<TextInput
+						style={styles.input}
+						value={email}
+						onChangeText={setEmail}
+						keyboardType="email-address"
+						autoCapitalize="none"
+						placeholder="Your email"
+					/>
+				</ThemedView>
 
-			{/* Email */}
-			<ThemedView style={styles.section}>
-				<ThemedText style={styles.label}>Email</ThemedText>
-				<TextInput
-					style={styles.input}
-					value={email}
-					onChangeText={setEmail}
-					keyboardType="email-address"
-					autoCapitalize="none"
-					placeholder="Your email"
-				/>
-			</ThemedView>
+				{/* Password Section */}
+				<ThemedView style={styles.section}>
+					<ThemedText style={styles.sectionTitle}>
+						Change Password
+					</ThemedText>
 
-			{/* Password Section */}
-			<ThemedView style={styles.section}>
-				<ThemedText style={styles.sectionTitle}>Change Password</ThemedText>
+					<ThemedText style={styles.label}>Current Password</ThemedText>
+					<TextInput
+						style={styles.input}
+						value={currentPassword}
+						onChangeText={setCurrentPassword}
+						secureTextEntry
+						placeholder="Enter current password"
+					/>
 
-				<ThemedText style={styles.label}>Current Password</ThemedText>
-				<TextInput
-					style={styles.input}
-					value={currentPassword}
-					onChangeText={setCurrentPassword}
-					secureTextEntry
-					placeholder="Enter current password"
-				/>
+					<ThemedText style={styles.label}>New Password</ThemedText>
+					<TextInput
+						style={styles.input}
+						value={newPassword}
+						onChangeText={setNewPassword}
+						secureTextEntry
+						placeholder="Enter new password"
+					/>
 
-				<ThemedText style={styles.label}>New Password</ThemedText>
-				<TextInput
-					style={styles.input}
-					value={newPassword}
-					onChangeText={setNewPassword}
-					secureTextEntry
-					placeholder="Enter new password"
-				/>
+					<ThemedText style={styles.label}>
+						Confirm New Password
+					</ThemedText>
+					<TextInput
+						style={styles.input}
+						value={confirmPassword}
+						onChangeText={setConfirmPassword}
+						secureTextEntry
+						placeholder="Confirm new password"
+					/>
+				</ThemedView>
 
-				<ThemedText style={styles.label}>Confirm New Password</ThemedText>
-				<TextInput
-					style={styles.input}
-					value={confirmPassword}
-					onChangeText={setConfirmPassword}
-					secureTextEntry
-					placeholder="Confirm new password"
-				/>
-			</ThemedView>
-
-			<Pressable
-				style={[styles.saveButton, { opacity: hasChanges() ? 1 : 0.5 }]}
-				onPress={handleSave}
-				disabled={!hasChanges()}
-			>
-				<ThemedText style={styles.saveButtonText}>Save Changes</ThemedText>
-			</Pressable>
-		</ScrollView>
+				<Pressable
+					style={[styles.saveButton, { opacity: hasChanges() ? 1 : 0.5 }]}
+					onPress={handleSave}
+					disabled={!hasChanges()}
+				>
+					<ThemedText style={styles.saveButtonText}>
+						Save Changes
+					</ThemedText>
+				</Pressable>
+			</ScrollView>
+		</>
 	);
 }
