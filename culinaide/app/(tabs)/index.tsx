@@ -1,17 +1,28 @@
-// app/(tabs)/index.tsx
-import { View, TouchableOpacity } from "react-native";
 import { useState } from "react";
+import { View, TouchableOpacity } from "react-native";
 import { router } from "expo-router";
 import { MaterialIcons } from "@expo/vector-icons";
-
+import { useEffect } from "react";
+import { useLocalSearchParams } from "expo-router";
 import { ThemedText, ThemedView } from "@/components";
 import { FoodItem, sampleItems } from "@/data/sampleItems";
 import { homeStyles } from "@/styles/home.styles";
 import { PantryGrid } from "@/components/PantryGrid";
 
 export default function HomeScreen() {
-	const [selectedItem, setSelectedItem] = useState<string | null>(null);
+	const params = useLocalSearchParams();
 	const [items, setItems] = useState<FoodItem[]>(sampleItems);
+	const [selectedItem, setSelectedItem] = useState<string | null>(null);
+	const [showScanned, setShowScanned] = useState(false);
+
+	useEffect(() => {
+		if (params.mergeScanned === "1") {
+			setShowScanned(true);
+		}
+	}, [params.mergeScanned]);
+
+	// Items visible in grid (based on flag)
+	const visibleItems = items.filter((it) => !it.scanned || showScanned);
 
 	const handleDeleteItem = (id: string) => {
 		setItems((prev) => prev.filter((item) => item.id !== id));
@@ -19,7 +30,12 @@ export default function HomeScreen() {
 	};
 
 	const toggleItem = (id: string) => {
-		setSelectedItem(selectedItem === id ? null : id);
+		setSelectedItem((cur) => (cur === id ? null : id));
+	};
+
+	const resetPantry = () => {
+		setShowScanned(false);
+		setItems(sampleItems);
 	};
 
 	return (
@@ -30,7 +46,7 @@ export default function HomeScreen() {
 				<View style={homeStyles.headerButtons}>
 					<TouchableOpacity
 						style={homeStyles.resetButton}
-						onPress={() => setItems(sampleItems)}
+						onPress={resetPantry}
 					>
 						<MaterialIcons name="refresh" size={24} color="#000" />
 					</TouchableOpacity>
@@ -49,7 +65,7 @@ export default function HomeScreen() {
 
 			{/* Pantry Grid */}
 			<PantryGrid
-				items={items}
+				items={visibleItems}
 				selectedItem={selectedItem}
 				toggleItem={toggleItem}
 				handleDeleteItem={handleDeleteItem}
