@@ -1,0 +1,101 @@
+// styles/account-edit.styles.ts
+import { StyleSheet } from "react-native";
+export const COLORS = {
+	primary: "#a2bcf7",
+	secondary: "#f1f55a",
+	accent: "#e02d00",
+	black: "#1a1a1a",
+	white: "#ffffff",
+	lightGray: "#f5f7fa",
+	primaryLight: "#a2bcf720",
+	primaryDark: "#7494d1",
+	secondaryDark: "#000A2E",
+};
+
+export const notificationStyles = StyleSheet.create({
+	container: {
+		flex: 1,
+		padding: 16,
+		marginTop: 60,
+		backgroundColor: COLORS.lightGray,
+	},
+	section: {
+		marginBottom: 24,
+		gap: 12,
+		backgroundColor: COLORS.lightGray,
+	},
+	sectionTitle: {
+		color: COLORS.black,
+		backgroundColor: COLORS.lightGray,
+		fontSize: 24,
+		fontWeight: "600",
+		marginBottom: 8,
+	},
+	ingredientCard: {
+		flexDirection: "row",
+		alignItems: "center",
+		padding: 16,
+		backgroundColor: COLORS.white,
+		borderRadius: 12,
+		gap: 12,
+		borderLeftWidth: 4,
+		borderLeftColor: COLORS.primary,
+		marginBottom: 4,
+		shadowColor: COLORS.black,
+		shadowOffset: { width: 0, height: 2 },
+		shadowOpacity: 0.1,
+		shadowRadius: 4,
+		elevation: 3,
+	},
+	ingredientInfo: {
+		flex: 1,
+		backgroundColor: COLORS.white,
+	},
+	ingredientName: {
+		color: COLORS.black,
+		fontSize: 16,
+		fontWeight: "600",
+		marginBottom: 4,
+	},
+	recipeCard: {
+		padding: 16,
+		backgroundColor: COLORS.white,
+		borderRadius: 12,
+		gap: 8,
+		borderWidth: 1,
+		borderColor: COLORS.primaryLight,
+		shadowColor: COLORS.black,
+		shadowOffset: { width: 0, height: 2 },
+		shadowOpacity: 0.1,
+		shadowRadius: 4,
+		elevation: 3,
+	},
+	recipeHeader: {
+		flexDirection: "row",
+		justifyContent: "space-between",
+		alignItems: "center",
+	},
+	recipeName: {
+		color: COLORS.black,
+		fontSize: 18,
+		fontWeight: "600",
+	},
+	difficultyTag: {
+		fontSize: 12,
+		color: COLORS.primaryDark,
+		backgroundColor: COLORS.primaryLight,
+		paddingHorizontal: 8,
+		paddingVertical: 4,
+		borderRadius: 12,
+		fontWeight: "500",
+	},
+	ingredientsList: {
+		color: COLORS.black + "99",
+		fontSize: 14,
+	},
+	tapPrompt: {
+		color: COLORS.primary,
+		marginTop: 8,
+		fontWeight: "500",
+	},
+});
