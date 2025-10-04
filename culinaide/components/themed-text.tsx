@@ -1,7 +1,7 @@
 import { StyleSheet, Text, type TextProps } from "react-native";
 
 export type ThemedTextProps = TextProps & {
-	type?: "default" | "title" | "link";
+	type?: "default" | "title" | "link" | "foodItem";
 };
 
 export function ThemedText({
@@ -26,5 +26,9 @@ const styles = StyleSheet.create({
 		fontSize: 16,
 		color: "#86c0f9ff",
 		textDecorationLine: "underline",
+	},
+	foodItem: {
+		fontSize: 12,
+		color: "#05111eff",
 	},
 });
