@@ -11,7 +11,6 @@ export const accountEditStyles = StyleSheet.create({
 		fontSize: 24,
 		fontWeight: "bold",
 		marginBottom: 20,
-		marginTop: 60,
 	},
 	avatarContainer: {
 		alignItems: "center",

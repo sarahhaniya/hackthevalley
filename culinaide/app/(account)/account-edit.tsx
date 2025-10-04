@@ -1,6 +1,7 @@
 // app/(account)/account-edit.tsx
-import { useState } from "react";
-import { TextInput, Pressable, ScrollView } from "react-native";
+import { useState, useEffect } from "react";
+import { TextInput, Pressable, ScrollView, Alert } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { router } from "expo-router";
 
 import { ThemedView } from "@/components/themed-view";
@@ -8,35 +9,83 @@ import { ThemedText } from "@/components/themed-text";
 import { MaterialIcons } from "@expo/vector-icons";
 import { accountEditStyles as styles } from "../../styles/account-edit.styles";
 
-
 export default function AccountEditScreen() {
-	const [name, setName] = useState("John Doe");
-	const [email, setEmail] = useState("john.doe@example.com");
+	const [name, setName] = useState("");
+	const [email, setEmail] = useState("");
 	const [currentPassword, setCurrentPassword] = useState("");
 	const [newPassword, setNewPassword] = useState("");
 	const [confirmPassword, setConfirmPassword] = useState("");
 	const [error, setError] = useState("");
+	const [originalData, setOriginalData] = useState<any>(null);
+
+	// Check if changes exist
+	const hasChanges = () => {
+		if (!originalData) return false;
+		const current = { name, email };
+		return (
+			JSON.stringify(current) !== JSON.stringify(originalData) ||
+			newPassword.length > 0 ||
+			confirmPassword.length > 0
+		);
+	};
 
 	const handleSave = async () => {
 		try {
-			// Validate passwords if being changed
+			setError("");
+
+			// Only check that new password matches confirm password
 			if (newPassword || confirmPassword) {
-				if (!currentPassword) {
-					setError("Current password is required to change password");
-					return;
-				}
 				if (newPassword !== confirmPassword) {
 					setError("New passwords do not match");
 					return;
 				}
 			}
 
-			// Save profile logic here
+			const profile = { name, email };
+
+			// Save to AsyncStorage
+			await AsyncStorage.setItem("userProfile", JSON.stringify(profile));
+
+			// Reset baseline
+			setOriginalData(profile);
+			setCurrentPassword("");
+			setNewPassword("");
+			setConfirmPassword("");
+
+			Alert.alert("Success", "Profile updated successfully! ✅");
 			router.back();
 		} catch {
 			setError("Failed to update profile");
 		}
 	};
+
+	// Load saved profile
+	useEffect(() => {
+		const loadProfile = async () => {
+			try {
+				const saved = await AsyncStorage.getItem("userProfile");
+				if (saved) {
+					const parsed = JSON.parse(saved);
+					setName(parsed.name || "");
+					setEmail(parsed.email || "");
+					setOriginalData(parsed);
+				} else {
+					// defaults
+					const defaults = {
+						name: "John Doe",
+						email: "john.doe@example.com",
+					};
+					setName(defaults.name);
+					setEmail(defaults.email);
+					setOriginalData(defaults);
+				}
+			} catch (err) {
+				console.error("Failed to load profile:", err);
+			}
+		};
+
+		loadProfile();
+	}, []);
 
 	return (
 		<ScrollView style={styles.container}>
@@ -51,6 +100,7 @@ export default function AccountEditScreen() {
 				<ThemedText style={styles.changePhotoText}>Change Photo</ThemedText>
 			</Pressable>
 
+			{/* Name */}
 			<ThemedView style={styles.section}>
 				<ThemedText style={styles.label}>Name</ThemedText>
 				<TextInput
@@ -61,6 +111,7 @@ export default function AccountEditScreen() {
 				/>
 			</ThemedView>
 
+			{/* Email */}
 			<ThemedView style={styles.section}>
 				<ThemedText style={styles.label}>Email</ThemedText>
 				<TextInput
@@ -73,6 +124,7 @@ export default function AccountEditScreen() {
 				/>
 			</ThemedView>
 
+			{/* Password Section */}
 			<ThemedView style={styles.section}>
 				<ThemedText style={styles.sectionTitle}>Change Password</ThemedText>
 
@@ -104,7 +156,11 @@ export default function AccountEditScreen() {
 				/>
 			</ThemedView>
 
-			<Pressable style={styles.saveButton} onPress={handleSave}>
+			<Pressable
+				style={[styles.saveButton, { opacity: hasChanges() ? 1 : 0.5 }]}
+				onPress={handleSave}
+				disabled={!hasChanges()}
+			>
 				<ThemedText style={styles.saveButtonText}>Save Changes</ThemedText>
 			</Pressable>
 		</ScrollView>
