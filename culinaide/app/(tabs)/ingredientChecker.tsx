@@ -6,7 +6,7 @@
 // import { router } from "expo-router";
 
 // const COLORS = {
-// 	primary: "#a2bcf7",
+// 	primary: "#d1383c",
 // 	black: "#1a1a1a",
 // 	white: "#ffffff",
 // 	gray: "#666",

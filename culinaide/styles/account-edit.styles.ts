@@ -25,7 +25,7 @@ export const accountEditStyles = StyleSheet.create({
 		alignItems: "center",
 	},
 	changePhotoText: {
-		color: "#a2bcf7",
+		color: "#d1383c",
 		marginTop: 8,
 		fontSize: 16,
 	},
@@ -51,7 +51,7 @@ export const accountEditStyles = StyleSheet.create({
 		marginBottom: 16,
 	},
 	saveButton: {
-		backgroundColor: "#a2bcf7",
+		backgroundColor: "#d1383c",
 		padding: 16,
 		borderRadius: 12,
 		alignItems: "center",

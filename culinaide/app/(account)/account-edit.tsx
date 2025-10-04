@@ -10,7 +10,6 @@ import { MaterialIcons } from "@expo/vector-icons";
 import { accountEditStyles as styles } from "../../styles/account-edit.styles";
 import { Stack } from "expo-router";
 
-
 export default function AccountEditScreen() {
 	const [name, setName] = useState("");
 	const [email, setEmail] = useState("");
@@ -93,8 +92,9 @@ export default function AccountEditScreen() {
 		<>
 			<Stack.Screen
 				options={{
-					title: "Edit Profile", // 👈 change header text
-					headerBackTitle: "Back", // 👈 text under the arrow (iOS only)
+					title: "Edit Profile", 
+					headerBackTitle: "Back",
+					headerTintColor: "#d1383c",
 				}}
 			/>
 
@@ -107,7 +107,7 @@ export default function AccountEditScreen() {
 
 				<Pressable style={styles.avatarContainer}>
 					<ThemedView style={styles.avatar}>
-						<MaterialIcons name="person" size={80} color="#a2bcf7" />
+						<MaterialIcons name="person" size={80} color="#d1383c" />
 					</ThemedView>
 					<ThemedText style={styles.changePhotoText}>
 						Change Photo
