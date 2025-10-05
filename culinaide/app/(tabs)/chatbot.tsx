@@ -264,19 +264,44 @@ const styles = StyleSheet.create({
 		flex: 1,
 	},
 });
-
 const markdownStyles = {
 	body: {
 		color: "#000",
-		fontSize: 15,
+		fontSize: 16,
+		lineHeight: 22,
+	},
+	paragraph: {
+		marginBottom: 10,
 	},
 	strong: {
-		fontWeight: "700",
+		fontWeight: "700" as const, // or "bold"
 	},
 	em: {
-		fontStyle: "italic",
+		fontStyle: "italic" as const,
 	},
 	list_item: {
 		marginVertical: 4,
 	},
+	bullet_list_icon: {
+		color: "#d1383c",
+	},
+	link: {
+		color: "#d1383c",
+		textDecorationLine: "underline" as const,
+	},
+	blockquote: {
+		backgroundColor: "#f7f7f7",
+		borderLeftWidth: 4,
+		borderLeftColor: "#d1383c",
+		paddingHorizontal: 10,
+		paddingVertical: 6,
+		marginVertical: 6,
+	},
+	code_inline: {
+		backgroundColor: "#eee",
+		paddingHorizontal: 4,
+		borderRadius: 4,
+		fontFamily: Platform.OS === "ios" ? "Menlo" : "monospace",
+	},
 };
+  
