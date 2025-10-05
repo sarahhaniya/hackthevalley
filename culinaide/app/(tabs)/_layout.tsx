@@ -50,6 +50,15 @@ export default function TabLayout() {
 					),
 				}}
 			/>
+			<Tabs.Screen
+				name="ingredientChecker"
+				options={{
+					title: "Ingredients",
+					tabBarIcon: ({ color, size }) => (
+						<MaterialIcons name="restaurant" size={size} color={color} />
+					),
+				}}
+			/>
 		</Tabs>
   );
 }
