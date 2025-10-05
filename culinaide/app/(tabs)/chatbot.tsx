@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, View, Platform, KeyboardAvoidingView } from "react-native";
 import {
 	SafeAreaView,
 	useSafeAreaInsets,
@@ -11,14 +11,24 @@ const Chatbot: React.FC = () => {
 
 	return (
 		<SafeAreaView style={styles.container} edges={["top", "left", "right"]}>
-			<View style={styles.webviewContainer}>
-				<WebView
-					originWhitelist={["*"]}
-					source={require("../../assets/index.html")}
-					javaScriptEnabled
-					style={styles.webview}
-				/>
-			</View>
+			<KeyboardAvoidingView
+				style={{ flex: 1 }}
+				behavior={Platform.OS === "ios" ? "padding" : undefined}
+			>
+				<View style={styles.webviewContainer}>
+					<WebView
+						originWhitelist={["*"]}
+						source={require("../../assets/index.html")} // static Voiceflow embed
+						javaScriptEnabled
+						domStorageEnabled // keep chat session in storage
+						cacheEnabled // don’t wipe state on rerenders
+						setSupportMultipleWindows={false} // avoid "new window" reloads
+						overScrollMode="never" // Android: prevent accidental reloads
+						pullToRefreshEnabled={false} // Android: disable swipe-to-refresh
+						style={styles.webview}
+					/>
+				</View>
+			</KeyboardAvoidingView>
 		</SafeAreaView>
 	);
 };

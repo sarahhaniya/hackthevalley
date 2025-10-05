@@ -30,20 +30,26 @@
         <script type="text/javascript">
             (function (d, t)
             {
-                var v = d.createElement(t),
-                    s = d.getElementsByTagName(t)[0];
+                var v = d.createElement(t), s = d.getElementsByTagName(t)[0];
                 v.onload = function ()
                 {
                     window.voiceflow.chat.load({
-                        verify: { projectID: "68d98e37d1409c6c304b4627" }, // ✅ your project ID
-                        url: "https://general-runtime.voiceflow.com",
-                        versionID: "68d98e37d1409c6c304b4628", // or "development" if you want preview
+                        verify: { projectID: '68d98e37d1409c6c304b4627' },
+                        url: 'https://general-runtime.voiceflow.com',
+                        versionID: 'production',
+                        voice: {
+                            url: "https://runtime-api.voiceflow.com"
+                        },
+                        render: {
+                            mode: 'embedded',
+                            target: document.getElementById('voiceflow-chat-container')
+                        }
                     });
-                };
+                }
                 v.src = "https://cdn.voiceflow.com/widget-next/bundle.mjs";
                 v.type = "text/javascript";
                 s.parentNode.insertBefore(v, s);
-            })(document, "script");
+            })(document, 'script');
         </script>
     </body>
 

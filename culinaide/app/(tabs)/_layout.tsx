@@ -19,15 +19,6 @@ export default function TabLayout() {
 					),
 				}}
 			/>
-			{/* <Tabs.Screen
-				name="ingredientChecker"
-				options={{
-					title: "Ingredients",
-					tabBarIcon: ({ color, size }) => (
-						<AntDesign name="barcode" size={24} color="black" />
-					),
-				}}
-			/> */}
 			<Tabs.Screen
 				name="account"
 				options={{

@@ -42,7 +42,7 @@ export default function HomeScreen() {
 		<ThemedView style={homeStyles.container}>
 			{/* Header */}
 			<View style={homeStyles.header}>
-				<ThemedText type="title">My Pantry</ThemedText>
+				<ThemedText type="title">My Food</ThemedText>
 				<View style={homeStyles.headerButtons}>
 					<TouchableOpacity
 						style={homeStyles.resetButton}

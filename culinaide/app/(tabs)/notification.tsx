@@ -100,6 +100,7 @@ export default function NotificationScreen() {
 
 	return (
 		<ScrollView style={styles.container}>
+			{/* Expiring Soon */}
 			<ThemedView style={styles.section}>
 				<ThemedText style={styles.sectionTitle}>Expiring Soon</ThemedText>
 				{expiringIngredients.length === 0 ? (
@@ -108,46 +109,38 @@ export default function NotificationScreen() {
 					expiringIngredients.map((ingredient) => (
 						<Pressable
 							key={ingredient.id}
-							style={styles.recipeCard}
+							style={styles.ingredientCard}
 							onPress={() => navigateToRecipeChat()}
 						>
-							<ThemedView style={styles.ingredientCard}>
-								<MaterialIcons
-									name="error"
-									size={24}
-									color={getExpiryColor(ingredient.daysUntilExpiry)}
-								/>
-								<ThemedView style={styles.ingredientInfo}>
-									<ThemedText style={styles.ingredientName}>
-										{ingredient.name}
-									</ThemedText>
-									<ThemedText
-										style={{
-											color: getExpiryColor(
-												ingredient.daysUntilExpiry
-											),
-											fontWeight: "500",
-										}}
-									>
-										{ingredient.daysUntilExpiry <= 0
-											? "Expired!"
-											: `Expires in ${
-													ingredient.daysUntilExpiry
-											  } day${
-													ingredient.daysUntilExpiry > 1 ? "s" : ""
-											  }`}
-									</ThemedText>
-								</ThemedView>
+							<MaterialIcons
+								name="error"
+								size={24}
+								color={getExpiryColor(ingredient.daysUntilExpiry)}
+							/>
+							<ThemedView style={styles.ingredientInfo}>
+								<ThemedText style={styles.ingredientName}>
+									{ingredient.name}
+								</ThemedText>
+								<ThemedText
+									style={{
+										color: getExpiryColor(ingredient.daysUntilExpiry),
+										fontWeight: "500",
+									}}
+								>
+									{ingredient.daysUntilExpiry <= 0
+										? "Expired!"
+										: `Expires in ${ingredient.daysUntilExpiry} day${ingredient.daysUntilExpiry > 1 ? "s" : ""
+										}`}
+								</ThemedText>
 							</ThemedView>
 						</Pressable>
 					))
 				)}
 			</ThemedView>
 
+			{/* Recommended Recipes */}
 			<ThemedView style={styles.section}>
-				<ThemedText style={styles.sectionTitle}>
-					Recommended Recipes
-				</ThemedText>
+				<ThemedText style={styles.sectionTitle}>Recommended Recipes</ThemedText>
 				{recommendations.map((recipe) => (
 					<Pressable
 						key={recipe.id}
@@ -155,9 +148,7 @@ export default function NotificationScreen() {
 						onPress={() => navigateToRecipeChat(recipe)}
 					>
 						<ThemedView style={styles.recipeHeader}>
-							<ThemedText style={styles.recipeName}>
-								{recipe.name}
-							</ThemedText>
+							<ThemedText style={styles.recipeName}>{recipe.name}</ThemedText>
 							<ThemedText style={styles.difficultyTag}>
 								{recipe.difficulty}
 							</ThemedText>

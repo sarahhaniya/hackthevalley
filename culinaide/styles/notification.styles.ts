@@ -1,14 +1,14 @@
 // styles/account-edit.styles.ts
 import { StyleSheet } from "react-native";
 export const COLORS = {
-	primary: "#a2bcf7",
+	primary: "#d1383c",
 	secondary: "#f1f55a",
 	accent: "#e02d00",
 	black: "#1a1a1a",
 	white: "#ffffff",
 	lightGray: "#f5f7fa",
 	primaryLight: "#a2bcf720",
-	primaryDark: "#7494d1",
+	primaryDark: "#d1383c",
 	secondaryDark: "#000A2E",
 };
 
@@ -40,7 +40,7 @@ export const notificationStyles = StyleSheet.create({
 		gap: 12,
 		borderLeftWidth: 4,
 		borderLeftColor: COLORS.primary,
-		marginBottom: 4,
+		marginBottom: 12,
 		shadowColor: COLORS.black,
 		shadowOffset: { width: 0, height: 2 },
 		shadowOpacity: 0.1,
@@ -49,7 +49,6 @@ export const notificationStyles = StyleSheet.create({
 	},
 	ingredientInfo: {
 		flex: 1,
-		backgroundColor: COLORS.white,
 	},
 	ingredientName: {
 		color: COLORS.black,
