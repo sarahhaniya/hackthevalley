@@ -49,9 +49,25 @@ export default function CommunityScreen() {
 		<SafeAreaView style={styles.container}>
 			<View style={styles.header}>
 				<Text style={styles.title}>Community Share</Text>
-				<Pressable onPress={handleAddFriend}>
-					<MaterialIcons name="person-add" size={28} color="#d1383c" />
-				</Pressable>
+
+				<View style={styles.headerButtons}>
+					<Pressable onPress={handleAddFriend} style={styles.iconButton}>
+						<MaterialIcons name="person-add" size={26} color="#d1383c" />
+					</Pressable>
+
+					<Pressable
+						onPress={() =>
+							Alert.alert("Share Item", "You’re about to share an item!")
+						}
+						style={[styles.iconButton, styles.shareButton]}
+					>
+						<MaterialIcons
+							name="add-circle-outline"
+							size={26}
+							color="#d1383c"
+						/>
+					</Pressable>
+				</View>
 			</View>
 
 			<ScrollView contentContainerStyle={styles.feed}>
@@ -145,5 +161,16 @@ const styles = StyleSheet.create({
 	claimText: {
 		color: "#fff",
 		fontWeight: "600",
+	},
+	headerButtons: {
+		flexDirection: "row",
+		alignItems: "center",
+		gap: 12,
+	},
+	iconButton: {
+		padding: 4,
+	},
+	shareButton: {
+		marginLeft: 4,
 	},
 });
