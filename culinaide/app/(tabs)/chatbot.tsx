@@ -12,13 +12,10 @@ import {
 	TextInput,
 	Pressable,
 } from "react-native";
-import {
-	SafeAreaView,
-	useSafeAreaInsets,
-} from "react-native-safe-area-context";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { WebView } from "react-native-webview";
 
-const GEMINI_API_KEY = apiKey; // replace with your actual Gemini API key
+const GEMINI_API_KEY = apiKey; 
 
 export default function Chatbot() {
 	const [useGemini, setUseGemini] = useState(false);
@@ -28,8 +25,6 @@ export default function Chatbot() {
 	const [input, setInput] = useState("");
 	const [loading, setLoading] = useState(false);
 	const scrollViewRef = useRef<ScrollView>(null);
-
-	// get device safe area insets
 	const insets = useSafeAreaInsets();
 
 	useEffect(() => {
@@ -96,6 +91,23 @@ export default function Chatbot() {
 				<Text style={styles.toggleLabel}>Gemini</Text>
 			</View>
 
+			{/* New Chat button appears only in Gemini mode */}
+			{useGemini && (
+				<Pressable
+					style={styles.newChatButton}
+					onPress={() =>
+						setMessages([
+							{
+								role: "assistant",
+								text: "Hi! I'm Gemini ✧˖ — ask me anything!",
+							},
+						])
+					}
+				>
+					<Text style={styles.newChatText}>＋ New Chat</Text>
+				</Pressable>
+			)}
+
 			{useGemini ? (
 				<View style={styles.chatContainer}>
 					<ScrollView
@@ -139,7 +151,7 @@ export default function Chatbot() {
 						<View
 							style={[
 								styles.inputContainer,
-								{ paddingBottom: insets.bottom ? 0 : 0 }, // removes bottom white gap
+								{ paddingBottom: insets.bottom ? 0 : 0 },
 							]}
 						>
 							<TextInput
@@ -195,6 +207,19 @@ const styles = StyleSheet.create({
 		fontWeight: "600",
 		marginHorizontal: 10,
 		color: "#333",
+	},
+	newChatButton: {
+		alignSelf: "center",
+		backgroundColor: "#f1f1f1",
+		paddingVertical: 6,
+		paddingHorizontal: 16,
+		borderRadius: 20,
+		marginVertical: 6,
+	},
+	newChatText: {
+		color: "#d1383c",
+		fontWeight: "600",
+		fontSize: 15,
 	},
 	chatContainer: {
 		flex: 1,
@@ -264,6 +289,7 @@ const styles = StyleSheet.create({
 		flex: 1,
 	},
 });
+
 const markdownStyles = {
 	body: {
 		color: "#000",
@@ -274,7 +300,7 @@ const markdownStyles = {
 		marginBottom: 10,
 	},
 	strong: {
-		fontWeight: "700" as const, // or "bold"
+		fontWeight: "700" as const,
 	},
 	em: {
 		fontStyle: "italic" as const,
@@ -304,4 +330,3 @@ const markdownStyles = {
 		fontFamily: Platform.OS === "ios" ? "Menlo" : "monospace",
 	},
 };
-  
