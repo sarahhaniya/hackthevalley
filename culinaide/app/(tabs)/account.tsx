@@ -19,6 +19,45 @@ export default function AccountScreen() {
 					Account
 				</ThemedText>
 				<ProfileCard />
+				<ThemedView
+					style={{
+						flexDirection: "row",
+						alignItems: "center",
+						justifyContent: "space-between",
+						padding: 16,
+						marginHorizontal: 16,
+						marginBottom: 16,
+						backgroundColor: "#ffffff",
+						borderRadius: 12,
+						shadowColor: "#000",
+						shadowOffset: { width: 0, height: 2 },
+						shadowOpacity: 0.1,
+						shadowRadius: 4,
+						elevation: 3,
+					}}
+				>
+					<ThemedText
+						style={{
+							fontSize: 18,
+							fontWeight: "600",
+							color: "#1a1a1a",
+						}}
+					>
+						Collect Points
+					</ThemedText>
+
+					<ThemedText
+						style={{
+							fontSize: 14,
+							color: "#888",
+							fontWeight: "500",
+							fontStyle: "italic",
+						}}
+					>
+						Coming soon
+					</ThemedText>
+				</ThemedView>
+
 				<ThemedText type="title" style={accountStyles.header}>
 					Settings
 				</ThemedText>

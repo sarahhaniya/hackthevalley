@@ -1,8 +1,13 @@
 import { useState } from "react";
-import { View, TouchableOpacity, ActivityIndicator } from "react-native";
+import {
+	View,
+	TouchableOpacity,
+	ActivityIndicator,
+} from "react-native";
 import { router } from "expo-router";
 import * as ImagePicker from "expo-image-picker";
 import { MaterialIcons } from "@expo/vector-icons";
+import Toast from "react-native-toast-message";
 
 import { ThemedView } from "@/components/themed-view";
 import { ThemedText } from "@/components/themed-text";
@@ -37,21 +42,32 @@ export default function ScannerScreen() {
 		setLoading(true);
 		setError(null);
 
-		// For demo: mark some items as scanned
+		// Fake scanned items for demo
 		const updated = sampleItems.map((it) =>
 			["Rice", "Oreo", "Frozen Soy Beans"].includes(it.name)
 				? { ...it, scanned: true }
 				: it
 		);
-
 		const scanned = updated.filter((it) => it.scanned);
-
 		setScannedItems(scanned);
 
-		// Pass control back to Home with scanned flag
 		setTimeout(() => {
 			setLoading(false);
-			router.replace({ pathname: "/", params: { mergeScanned: "1" } });
+
+			// ✅ Show success toast
+			Toast.show({
+				type: "success",
+				text1: "Upload Successful 🎉",
+				text2: "Your receipt was scanned and items added!",
+				position: "bottom",
+				autoHide: true,
+				//visibilityTime: 5,
+			});
+
+			// // Navigate back to home after a short delay
+			// setTimeout(() => {
+			// 	router.replace({ pathname: "/", params: { mergeScanned: "1" } });
+			// }, 2500);
 		}, 1000);
 	};
 

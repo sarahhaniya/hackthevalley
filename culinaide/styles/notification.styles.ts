@@ -97,4 +97,31 @@ export const notificationStyles = StyleSheet.create({
 		marginTop: 8,
 		fontWeight: "500",
 	},
+	dealCard: {
+		backgroundColor: "#fff",
+		borderRadius: 12,
+		padding: 14,
+		marginBottom: 10,
+		shadowColor: "#000",
+		shadowOpacity: 0.1,
+		shadowRadius: 3,
+		shadowOffset: { width: 0, height: 2 },
+		elevation: 2,
+	},
+
+	dealInfo: {
+		flexDirection: "column",
+		gap: 4,
+	},
+
+	dealStore: {
+		fontSize: 16,
+		fontWeight: "700",
+		color: COLORS.primaryDark,
+	},
+
+	dealText: {
+		fontSize: 14,
+		color: "#444",
+	},
 });

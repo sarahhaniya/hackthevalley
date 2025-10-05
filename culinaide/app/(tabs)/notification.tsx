@@ -129,8 +129,9 @@ export default function NotificationScreen() {
 								>
 									{ingredient.daysUntilExpiry <= 0
 										? "Expired!"
-										: `Expires in ${ingredient.daysUntilExpiry} day${ingredient.daysUntilExpiry > 1 ? "s" : ""
-										}`}
+										: `Expires in ${ingredient.daysUntilExpiry} day${
+												ingredient.daysUntilExpiry > 1 ? "s" : ""
+										  }`}
 								</ThemedText>
 							</ThemedView>
 						</Pressable>
@@ -140,7 +141,9 @@ export default function NotificationScreen() {
 
 			{/* Recommended Recipes */}
 			<ThemedView style={styles.section}>
-				<ThemedText style={styles.sectionTitle}>Recommended Recipes</ThemedText>
+				<ThemedText style={styles.sectionTitle}>
+					Recommended Recipes
+				</ThemedText>
 				{recommendations.map((recipe) => (
 					<Pressable
 						key={recipe.id}
@@ -148,7 +151,9 @@ export default function NotificationScreen() {
 						onPress={() => navigateToRecipeChat(recipe)}
 					>
 						<ThemedView style={styles.recipeHeader}>
-							<ThemedText style={styles.recipeName}>{recipe.name}</ThemedText>
+							<ThemedText style={styles.recipeName}>
+								{recipe.name}
+							</ThemedText>
 							<ThemedText style={styles.difficultyTag}>
 								{recipe.difficulty}
 							</ThemedText>
@@ -159,6 +164,43 @@ export default function NotificationScreen() {
 						<ThemedText style={styles.tapPrompt}>
 							Tap to get the recipe →
 						</ThemedText>
+					</Pressable>
+				))}
+			</ThemedView>
+			{/* Local Deals */}
+			<ThemedView style={styles.section}>
+				<ThemedText style={styles.sectionTitle}>Deals Near You</ThemedText>
+
+				{[
+					{
+						id: "1",
+						store: "FRESHCO",
+						deal: "Strawberries on sale right now 🍓 — only $2.99/lb!",
+					},
+					{
+						id: "2",
+						store: "Walmart",
+						deal: "Buy 1 Get 1 Free on Eggs 🥚 until Sunday!",
+					},
+					{
+						id: "3",
+						store: "Metro",
+						deal: "Spinach bundles 20% off 🥬 today only!",
+					},
+				].map((item) => (
+					<Pressable
+						key={item.id}
+						style={styles.dealCard}
+						onPress={() => alert(`Navigating to ${item.store} deals...`)}
+					>
+						<ThemedView style={styles.dealInfo}>
+							<ThemedText style={styles.dealStore}>
+								{item.store}
+							</ThemedText>
+							<ThemedText style={styles.dealText}>
+								{item.deal}
+							</ThemedText>
+						</ThemedView>
 					</Pressable>
 				))}
 			</ThemedView>
