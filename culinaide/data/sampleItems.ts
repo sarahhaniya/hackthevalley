@@ -76,7 +76,7 @@ export const sampleItems: FoodItem[] = [
 	{
 		id: "10",
 		name: "Milk",
-		expiryDate: "2025-10-08",
+		expiryDate: "2025-10-09",
 		image: require("@/assets/images/food10.png"),
 		scanned: false,
 	},
