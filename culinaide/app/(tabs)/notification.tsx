@@ -26,22 +26,22 @@ type RecipeRecommendation = {
 	difficulty: "easy" | "medium" | "hard";
 };
 
-// helper – safe calendar day difference
 const calculateDaysUntilExpiry = (expiryDate: string): number => {
 	const today = new Date();
-	const todayUTC = Date.UTC(
+	const todayLocal = new Date(
 		today.getFullYear(),
 		today.getMonth(),
 		today.getDate()
 	);
-	const expiry = new Date(expiryDate);
-	const expiryUTC = Date.UTC(
-		expiry.getFullYear(),
-		expiry.getMonth(),
-		expiry.getDate()
-	);
-	return Math.ceil((expiryUTC - todayUTC) / (1000 * 60 * 60 * 24));
+
+	// Parse expiry date as local date, not UTC
+	const [year, month, day] = expiryDate.split("-").map(Number);
+	const expiryLocal = new Date(year, month - 1, day);
+
+	const diffTime = expiryLocal.getTime() - todayLocal.getTime();
+	return Math.ceil(diffTime / (1000 * 60 * 60 * 24));
 };
+
 
 export default function NotificationScreen() {
 	const [expiringIngredients, setExpiringIngredients] = useState<Ingredient[]>(
