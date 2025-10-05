@@ -1,4 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
+import Markdown from "react-native-markdown-display";
+
 import {
 	View,
 	Text,
@@ -113,9 +115,18 @@ export default function Chatbot() {
 									m.role === "user" ? styles.userMsg : styles.botMsg,
 								]}
 							>
-								<Text style={styles.messageText}>{m.text}</Text>
+								{m.role === "assistant" ? (
+									<Markdown style={markdownStyles}>{m.text}</Markdown>
+								) : (
+									<Text
+										style={[styles.messageText, { color: "#fff" }]}
+									>
+										{m.text}
+									</Text>
+								)}
 							</View>
 						))}
+
 						{loading && (
 							<Text style={styles.loading}>Gemini is thinking...</Text>
 						)}
@@ -253,3 +264,19 @@ const styles = StyleSheet.create({
 		flex: 1,
 	},
 });
+
+const markdownStyles = {
+	body: {
+		color: "#000",
+		fontSize: 15,
+	},
+	strong: {
+		fontWeight: "700",
+	},
+	em: {
+		fontStyle: "italic",
+	},
+	list_item: {
+		marginVertical: 4,
+	},
+};
