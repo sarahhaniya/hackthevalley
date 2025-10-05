@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import Markdown from "react-native-markdown-display";
-
+import { apiKey } from "@/data/apiKey";
 import {
 	View,
 	Text,
@@ -18,7 +18,7 @@ import {
 } from "react-native-safe-area-context";
 import { WebView } from "react-native-webview";
 
-const GEMINI_API_KEY = "AIzaSyD2TcUZwqfiIybwU9cLXtYxEmxk_ETF0Ho";
+const GEMINI_API_KEY = apiKey; // replace with your actual Gemini API key
 
 export default function Chatbot() {
 	const [useGemini, setUseGemini] = useState(false);
