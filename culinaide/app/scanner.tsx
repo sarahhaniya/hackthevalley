@@ -44,7 +44,7 @@ export default function ScannerScreen() {
 
 		// Fake scanned items for demo
 		const updated = sampleItems.map((it) =>
-			["Rice", "Oreo", "Frozen Soy Beans"].includes(it.name)
+			["Limes", "Laughing Cow Cheese", "14% Sour Cream"].includes(it.name)
 				? { ...it, scanned: true }
 				: it
 		);
@@ -53,6 +53,7 @@ export default function ScannerScreen() {
 
 		setTimeout(() => {
 			setLoading(false);
+			router.replace({ pathname: "/", params: { mergeScanned: "1" } });
 
 			// ✅ Show success toast
 			Toast.show({
