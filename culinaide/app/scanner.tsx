@@ -61,7 +61,7 @@ export default function ScannerScreen() {
 				text2: "Your receipt was scanned and items added!",
 				position: "bottom",
 				autoHide: true,
-				//visibilityTime: 5,
+				visibilityTime: 5000,
 			});
 
 			// // Navigate back to home after a short delay
