@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import {
 	View,
 	Text,
@@ -10,18 +10,29 @@ import {
 	TextInput,
 	Pressable,
 } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
+import {
+	SafeAreaView,
+	useSafeAreaInsets,
+} from "react-native-safe-area-context";
 import { WebView } from "react-native-webview";
 
-const GEMINI_API_KEY = "AIzaSyD2TcUZwqfiIybwU9cLXtYxEmxk_ETF0Ho"; // replace with your actual key
+const GEMINI_API_KEY = "AIzaSyD2TcUZwqfiIybwU9cLXtYxEmxk_ETF0Ho";
 
 export default function Chatbot() {
 	const [useGemini, setUseGemini] = useState(false);
 	const [messages, setMessages] = useState([
-		{ role: "assistant", text: "Hi! I'm Gemini 🤖 — ask me anything!" },
+		{ role: "assistant", text: "Hi! I'm Gemini ✧˖ — ask me anything!" },
 	]);
 	const [input, setInput] = useState("");
 	const [loading, setLoading] = useState(false);
+	const scrollViewRef = useRef<ScrollView>(null);
+
+	// get device safe area insets
+	const insets = useSafeAreaInsets();
+
+	useEffect(() => {
+		scrollViewRef.current?.scrollToEnd({ animated: true });
+	}, [messages]);
 
 	const handleSend = async () => {
 		if (!input.trim()) return;
@@ -71,23 +82,28 @@ export default function Chatbot() {
 	};
 
 	return (
-		<SafeAreaView style={styles.container}>
+		<View style={[styles.outerContainer, { paddingTop: insets.top }]}>
 			<View style={styles.toggleRow}>
 				<Text style={styles.toggleLabel}>Voiceflow</Text>
 				<Switch
 					value={useGemini}
 					onValueChange={setUseGemini}
 					trackColor={{ false: "#ccc", true: "#d1383c" }}
-					thumbColor={useGemini ? "#fff" : "#fff"}
+					thumbColor={"#fff"}
 				/>
 				<Text style={styles.toggleLabel}>Gemini</Text>
 			</View>
 
 			{useGemini ? (
-				<View style={{ flex: 1 }}>
+				<View style={styles.chatContainer}>
 					<ScrollView
+						ref={scrollViewRef}
+						onContentSizeChange={() =>
+							scrollViewRef.current?.scrollToEnd({ animated: true })
+						}
 						style={styles.chat}
-						contentContainerStyle={{ paddingBottom: 80 }}
+						contentContainerStyle={styles.chatContent}
+						showsVerticalScrollIndicator={false}
 					>
 						{messages.map((m, i) => (
 							<View
@@ -105,21 +121,31 @@ export default function Chatbot() {
 						)}
 					</ScrollView>
 
-					<View style={styles.inputContainer}>
-						<TextInput
-							value={input}
-							onChangeText={setInput}
-							placeholder="Type your message..."
-							style={styles.input}
-						/>
-						<Pressable style={styles.button} onPress={handleSend}>
-							<Text style={styles.buttonText}>Send</Text>
-						</Pressable>
-					</View>
+					<KeyboardAvoidingView
+						behavior={Platform.OS === "ios" ? "padding" : undefined}
+						keyboardVerticalOffset={Platform.OS === "ios" ? 80 : 0}
+					>
+						<View
+							style={[
+								styles.inputContainer,
+								{ paddingBottom: insets.bottom ? 0 : 0 }, // removes bottom white gap
+							]}
+						>
+							<TextInput
+								value={input}
+								onChangeText={setInput}
+								placeholder="Type your message..."
+								style={styles.input}
+							/>
+							<Pressable style={styles.button} onPress={handleSend}>
+								<Text style={styles.buttonText}>Send</Text>
+							</Pressable>
+						</View>
+					</KeyboardAvoidingView>
 				</View>
 			) : (
 				<KeyboardAvoidingView
-					style={{ flex: 1 }}
+					style={styles.webContainer}
 					behavior={Platform.OS === "ios" ? "padding" : undefined}
 				>
 					<WebView
@@ -135,17 +161,20 @@ export default function Chatbot() {
 					/>
 				</KeyboardAvoidingView>
 			)}
-		</SafeAreaView>
+		</View>
 	);
 }
 
 const styles = StyleSheet.create({
-	container: { flex: 1, backgroundColor: "#fff" },
+	outerContainer: {
+		flex: 1,
+		backgroundColor: "#fff",
+	},
 	toggleRow: {
 		flexDirection: "row",
 		alignItems: "center",
 		justifyContent: "center",
-		paddingVertical: 10,
+		paddingVertical: 8,
 		backgroundColor: "#f7f7f7",
 		borderBottomWidth: 1,
 		borderColor: "#ddd",
@@ -156,11 +185,22 @@ const styles = StyleSheet.create({
 		marginHorizontal: 10,
 		color: "#333",
 	},
-	chat: { flex: 1, padding: 16 },
+	chatContainer: {
+		flex: 1,
+		backgroundColor: "#fff",
+	},
+	chat: {
+		flex: 1,
+		paddingHorizontal: 16,
+	},
+	chatContent: {
+		paddingBottom: 12,
+	},
 	message: {
 		padding: 12,
 		borderRadius: 10,
 		marginBottom: 8,
+		marginTop: 8,
 		maxWidth: "85%",
 	},
 	userMsg: {
@@ -171,11 +211,15 @@ const styles = StyleSheet.create({
 		backgroundColor: "#f1f1f1",
 		alignSelf: "flex-start",
 	},
-	messageText: { color: "#000" },
+	messageText: {
+		color: "#000",
+	},
 	inputContainer: {
 		flexDirection: "row",
 		padding: 10,
 		borderTopWidth: 1,
+		paddingBottom: 10,
+		marginBottom: 10,
 		borderColor: "#ddd",
 		backgroundColor: "#fafafa",
 	},
@@ -193,7 +237,19 @@ const styles = StyleSheet.create({
 		paddingHorizontal: 16,
 		borderRadius: 8,
 	},
-	buttonText: { color: "#fff", fontWeight: "600" },
-	loading: { color: "#666", fontStyle: "italic", marginBottom: 10 },
-	webview: { flex: 1 },
+	buttonText: {
+		color: "#fff",
+		fontWeight: "600",
+	},
+	loading: {
+		color: "#666",
+		fontStyle: "italic",
+		marginBottom: 10,
+	},
+	webContainer: {
+		flex: 1,
+	},
+	webview: {
+		flex: 1,
+	},
 });
